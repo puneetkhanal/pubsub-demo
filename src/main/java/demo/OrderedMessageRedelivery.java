@@ -17,7 +17,7 @@ public class OrderedMessageRedelivery {
   public static final String TOPIC = "demo";
   public static final String SUBSCRIPTION = "demo-test-sub";
   public static final String MESSAGE_PREFIX = "message_";
-  private static final Logger logger = LoggerFactory.getLogger(PubSubUtils.class);
+  private static final Logger logger = LoggerFactory.getLogger(OrderedMessageRedelivery.class);
 
   public static void main(String[] args) throws IOException, InterruptedException {
     PubSubUtils.deleteSubscription(TOPIC, SUBSCRIPTION);
