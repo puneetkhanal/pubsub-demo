@@ -1,0 +1,26 @@
+plugins {
+  id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+
+  implementation platform('com.google.cloud:libraries-bom:19.2.1')
+
+  implementation 'com.google.cloud:google-cloud-pubsub'
+  compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+  compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+  implementation group: 'io.projectreactor', name: 'reactor-core', version: '3.4.5'
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+  useJUnitPlatform()
+}
