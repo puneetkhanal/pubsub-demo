@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.IntStream;
 
 public class OrderedMessageRedelivery {
@@ -25,11 +26,18 @@ public class OrderedMessageRedelivery {
     PubSubUtils.createTopic(TOPIC);
     PubSubUtils.createSubscription(TOPIC, null, SUBSCRIPTION);
 
+    AtomicLong previousTimestamp = new AtomicLong(System.currentTimeMillis());
+
     MessageReceiver receiver = (msg, ack) -> {
-      logger.info("received message {}", msg.getData().toString());
+
+      logger.info("interval: {} ms", System.currentTimeMillis() - previousTimestamp.get());
+      previousTimestamp.set(System.currentTimeMillis());
+      logger.info("received message {}", msg.getData().substring(0));
       if (msg.getData().toString().contains("message_0")) {
+        logger.info("nacking");
         //ack.nack(); // msg 0 is not ack/nack, expecting it to be redelivered, along with 1 and 2
       } else {
+        logger.info("acking");
         ack.ack();
       }
     };
